@@ -17,6 +17,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('to-do/{to_do}/complete', [ToDoController::class, 'complete'])
+    ->name('to-do.complete')
+    ->middleware('auth');
+
 Route::resource('to-do', ToDoController::class)
 ->only(['index', 'store','edit','update','destroy'])
 ->middleware(['auth']);

@@ -48,4 +48,12 @@ class ToDoController extends Controller
         $toDo->delete();
         return redirect(route('dashboard'));
     }
+
+    public function complete(ToDo $toDo): RedirectResponse
+    {
+        Gate::authorize('update',$toDo);
+        $toDo->update(['completed' => true]);
+
+        return redirect()->route('dashboard');
+    }
 }
