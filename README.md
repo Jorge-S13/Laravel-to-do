@@ -26,7 +26,7 @@
 ```
 #### Скопируйте файл **.env.example** в **.env**:
  ```bash
-  cp .env.example .env
+  copy .env.example .env
 ```
 #### Сгенерируйте ключ приложения:
  ```bash
@@ -47,6 +47,8 @@
  ```bash
   php artisan migrate
 ```
+Laravel не найдёт файл database.sqlite и спросит хотите ли вы создать его\
+Говорим, что хотим и пишем **yes** в командной строке.
 #### Установите **frontend**-зависимости с помощью **npm**:
  ```bash
   npm install
