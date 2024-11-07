@@ -57,7 +57,7 @@
                                         <span class="bg-red-500 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded">Незавершённая</span>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <x-primary-button>{{ __('Редактировать') }}</x-primary-button>
+                                        <a href="{{route('to-do.edit',$todo)}}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Редактировать</a>
                                         <x-danger-button class="ms-3">
                                             {{ __('Удалить') }}
                                         </x-danger-button>
