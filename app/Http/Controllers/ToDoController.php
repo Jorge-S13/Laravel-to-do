@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ToDoRequest;
 use App\Models\ToDo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,12 +15,9 @@ class ToDoController extends Controller
     {
         return view('todo.index');
     }
-    public function store(Request $request): RedirectResponse
+    public function store(ToDoRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'title' => 'required|string',
-            'description' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
         $request->user()->todos()->create($validated);
 
         return redirect(route('dashboard'));
@@ -31,13 +29,10 @@ class ToDoController extends Controller
             'todo' => $toDo,
         ]);
     }
-    public function update(Request $request, ToDo $toDo): RedirectResponse
+    public function update(ToDoRequest $request, ToDo $toDo): RedirectResponse
     {
         Gate::authorize('update',$toDo);
-        $validated = $request->validate([
-            'title' => 'required|string',
-            'description' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
         $toDo->update($validated);
 
         return redirect(route('dashboard'));
