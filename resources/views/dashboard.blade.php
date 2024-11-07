@@ -1,21 +1,21 @@
 <x-app-layout>
     <x-slot name="header">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-                    <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                        <dt class="text-base/7 text-green-600">Завершённых задач</dt>
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{$todos->where('completed',true)->count()}}</dd>
-                    </div>
-                    <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                        <dt class="text-base/7 text-red-600">Незавершённых задач</dt>
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{$todos->where('completed',false)->count()}}</dd>
-                    </div>
-                    <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                        <dt class="text-base/7 text-gray-600">Всего задач</dt>
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{$todos->count()}}</dd>
-                    </div>
-                </dl>
-            </div>
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+                <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+                    <dt class="text-base/7 text-green-600">Завершённых задач</dt>
+                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{$todos->where('completed',true)->count()}}</dd>
+                </div>
+                <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+                    <dt class="text-base/7 text-red-600">Незавершённых задач</dt>
+                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{$todos->where('completed',false)->count()}}</dd>
+                </div>
+                <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+                    <dt class="text-base/7 text-gray-600">Всего задач</dt>
+                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{$todos->count()}}</dd>
+                </div>
+            </dl>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -52,15 +52,29 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         @if($todo->completed)
-                                            <span class="bg-green-500 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded">Завершённая</span>
+                                            <span
+                                                class="bg-green-500 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded">Завершённая</span>
                                         @endif
-                                        <span class="bg-red-500 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded">Незавершённая</span>
+                                        <span
+                                            class="bg-red-500 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded">Незавершённая</span>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="{{route('to-do.edit',$todo)}}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Редактировать</a>
-                                        <x-danger-button class="ms-3">
-                                            {{ __('Удалить') }}
-                                        </x-danger-button>
+                                        <div class="flex space-x-2">
+                                            <a href="{{ route('to-do.edit', $todo) }}"
+                                               class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                Редактировать
+                                            </a>
+
+                                            <form action="{{ route('to-do.destroy', $todo) }}" method="POST"
+                                                  onsubmit="return confirm('Вы уверены, что хотите удалить?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                    Удалить
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

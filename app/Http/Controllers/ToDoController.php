@@ -42,4 +42,10 @@ class ToDoController extends Controller
 
         return redirect(route('dashboard'));
     }
+    public function destroy(ToDo $toDo): RedirectResponse
+    {
+        Gate::authorize('delete',$toDo);
+        $toDo->delete();
+        return redirect(route('dashboard'));
+    }
 }

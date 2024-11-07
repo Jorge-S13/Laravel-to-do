@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('to-do', ToDoController::class)
-->only(['index', 'store','edit','update'])
+->only(['index', 'store','edit','update','destroy'])
 ->middleware(['auth']);
 
 require __DIR__.'/auth.php';

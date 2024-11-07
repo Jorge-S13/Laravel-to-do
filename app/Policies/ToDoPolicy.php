@@ -45,7 +45,7 @@ class ToDoPolicy
      */
     public function delete(User $user, ToDo $toDo): bool
     {
-        //
+        return $toDo->user()->is($user);
     }
 
     /**
