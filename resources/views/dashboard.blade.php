@@ -31,7 +31,7 @@
                                     Задача
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Описание
+                                    Дата создания
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Статус
@@ -48,7 +48,7 @@
                                         {{$todo->title}}
                                     </th>
                                     <td class="px-6 py-4">
-                                        {{$todo->description}}
+                                        {{$todo->created_at->format('d.m.Y')}}
                                     </td>
                                     <td class="px-6 py-4">
                                         @if($todo->completed)
