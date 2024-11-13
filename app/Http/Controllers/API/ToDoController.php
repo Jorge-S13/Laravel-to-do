@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ToDoRequest;
+use App\Http\Resources\ToDoResource;
 use App\Models\ToDo;
 use Illuminate\Http\Request;
 
@@ -13,7 +15,7 @@ class ToDoController extends Controller
      */
     public function index()
     {
-        //
+        return ToDoResource::collection(ToDo::all());
     }
 
     /**
@@ -27,9 +29,12 @@ class ToDoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ToDoRequest $request)
     {
-        //
+        $data = $request->validated();
+        $todo = ToDo::create($data);
+
+        return ToDoResource::make($todo);
     }
 
     /**
@@ -37,7 +42,7 @@ class ToDoController extends Controller
      */
     public function show(ToDo $toDo)
     {
-        //
+        return ToDoResource::make($toDo);
     }
 
     /**
@@ -51,9 +56,12 @@ class ToDoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ToDo $toDo)
+    public function update(ToDoRequest $request, ToDo $toDo)
     {
-        //
+        $data = $request->validated();
+        $toDo->update($data);
+
+        return ToDoResource::make($toDo);
     }
 
     /**
@@ -61,6 +69,10 @@ class ToDoController extends Controller
      */
     public function destroy(ToDo $toDo)
     {
-        //
+        $toDo->delete();
+
+        return response()->json([
+            'message' => 'done'
+        ]);
     }
 }
