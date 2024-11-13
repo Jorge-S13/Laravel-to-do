@@ -7,7 +7,17 @@ use App\Http\Requests\ToDoRequest;
 use App\Http\Resources\ToDoResource;
 use App\Models\ToDo;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(
+ *     title="ToDo doc API",
+ *     version="1.0.0"
+ * ),
+ * @OA\PathItem(
+ *     path="/api/"
+ * ),
+ */
 class ToDoController extends Controller
 {
     /**
