@@ -21,7 +21,7 @@ class ToDoPolicy
      */
     public function view(User $user, ToDo $toDo): bool
     {
-        //
+        return $toDo->user()->is($user);
     }
 
     /**

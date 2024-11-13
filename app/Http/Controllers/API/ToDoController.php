@@ -25,7 +25,8 @@ class ToDoController extends Controller
      */
     public function index()
     {
-        return ToDoResource::collection(ToDo::all());
+        $user = auth()->user();
+        return ToDoResource::collection(ToDo::where('user_id',$user->id)->get());
     }
 
     /**
@@ -42,23 +43,27 @@ class ToDoController extends Controller
     public function store(ToDoRequest $request)
     {
         $data = $request->validated();
-        $todo = ToDo::create($data);
+        $user = auth()->user();
 
+        $todo = $user->todos()->create([
+            'title' => $data['title'],
+            'description' => $data['description'],
+        ]);
         return ToDoResource::make($todo);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ToDo $toDo)
+    public function show(ToDo $todo)
     {
-        return ToDoResource::make($toDo);
+        return ToDoResource::make($todo);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ToDo $toDo)
+    public function edit(ToDo $todo)
     {
         //
     }
@@ -66,20 +71,20 @@ class ToDoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ToDoRequest $request, ToDo $toDo)
+    public function update(ToDoRequest $request, ToDo $todo)
     {
         $data = $request->validated();
-        $toDo->update($data);
+        $todo->update($data);
 
-        return ToDoResource::make($toDo);
+        return ToDoResource::make($todo);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ToDo $toDo)
+    public function destroy(ToDo $todo)
     {
-        $toDo->delete();
+        $todo->delete();
 
         return response()->json([
             'message' => 'done'

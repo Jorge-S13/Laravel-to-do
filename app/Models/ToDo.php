@@ -12,12 +12,10 @@ class ToDo extends Model
         'description',
         'completed',
     ];
-    protected function casts(): array
-    {
-        return [
-            'completed' => 'boolean',
-        ];
-    }
+    protected $casts = [
+        'completed' => 'boolean',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
